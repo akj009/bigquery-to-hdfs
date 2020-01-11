@@ -1,5 +1,6 @@
 package com.mptyminds.dataflow;
 
+import lombok.extern.log4j.Log4j2;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.beam.runners.direct.DirectRunner;
@@ -16,6 +17,7 @@ import java.io.IOException;
 
 import static com.mptyminds.dataflow.ExportUtil.prepareQuery;
 
+@Log4j2
 public class Main {
 
     public static void main(String[] args) throws IOException {
@@ -35,7 +37,7 @@ public class Main {
 
         String query = prepareQuery(pipelineOptions, partitionDate, startTime, endTime);
 
-        System.out.println("final Query formed: \n\n" + query);
+        log.info("final Query formed: \n\n" + query);
 
         Pipeline pipeline = Pipeline.create(pipelineOptions);
         final Schema schema = ExportUtil.getAvroSchemaFromBQ(
@@ -63,7 +65,7 @@ public class Main {
                                 "parq")));
 
 
-        System.out.println("pipeline prepared.... running now.");
+        log.info("pipeline prepared.... running now.");
         pipeline.run();
     }
 
