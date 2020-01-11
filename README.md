@@ -32,6 +32,8 @@ on Spark 2 Cluster using **SparkRunner** is supported in `pom.xml`
 
 #### Running on Google Cloud Dataflow
 
+1. Run the following command to submit the job-
+
 ```
 export GOOGLE_APPLICATION_CREDENTIALS=/path/to/google_application_credentials
 
@@ -44,20 +46,25 @@ java -jar /path/to/final-shaded.jar \
 ```
 #### Running on Spark Cluster
 
-```
-export GOOGLE_APPLICATION_CREDENTIALS=/path/to/google_application_credentials
+1. Copy a suitable google application credentials file to all the nodes in the cluster.
+The roles required as `BigQueryAdmin`, `StorageAdmin`.
+2. Copy the jar file to any of the spark nodes.
+3. Run the following commands to submit the job-
 
-spark2-submit --class com.mptyminds.dataflow.Main \
-    --master yarn --deploy-mode client \
-    --driver-memory 2g --executor-memory 1g --executor-cores 1 \
-    --conf spark.yarn.appMasterEnv.GOOGLE_APPLICATION_CREDENTIALS=/path/to/google_application_credentials.json \
-    --conf spark.yarn.executorEnv.GOOGLE_APPLICATION_CREDENTIALS=/path/to/google_application_credentials.json \
-    --conf spark.executorEnv.GOOGLE_APPLICATION_CREDENTIALS=/path/to/google_application_credentials.json \
-    /path/to/final-shaded.jar \
-    --hdfsConfiguration=[{\"fs.default.name\":\"hdfs:/host:port\"}] \
-    --sparkMaster=yarn --streaming=false \
-    --project=<gcp-project> \
-    --bigqueryDataset=my_dataset --bigqueryTableName=<my_table_name> \
-    --tempLocation=gs://temp_bucket --outputFilePath=hdfs://host:port/user/test/ \
-    --sqlFilePath=<path-to-sql> --runner=DataflowRunner
-```
+    ```
+    export GOOGLE_APPLICATION_CREDENTIALS=/path/to/google_application_credentials
+    
+    spark2-submit --class com.mptyminds.dataflow.Main \
+        --master yarn --deploy-mode client \
+        --driver-memory 2g --executor-memory 1g --executor-cores 1 \
+        --conf spark.yarn.appMasterEnv.GOOGLE_APPLICATION_CREDENTIALS=/path/to/google_application_credentials.json \
+        --conf spark.yarn.executorEnv.GOOGLE_APPLICATION_CREDENTIALS=/path/to/google_application_credentials.json \
+        --conf spark.executorEnv.GOOGLE_APPLICATION_CREDENTIALS=/path/to/google_application_credentials.json \
+        /path/to/final-shaded.jar \
+        --hdfsConfiguration=[{\"fs.default.name\":\"hdfs:/host:port\"}] \
+        --sparkMaster=yarn --streaming=false \
+        --project=<gcp-project> \
+        --bigqueryDataset=my_dataset --bigqueryTableName=<my_table_name> \
+        --tempLocation=gs://temp_bucket --outputFilePath=hdfs://host:port/user/test/ \
+        --sqlFilePath=<path-to-sql> --runner=DataflowRunner
+    ```
