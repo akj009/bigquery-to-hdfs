@@ -66,5 +66,5 @@ The roles required as `BigQueryAdmin`, `StorageAdmin`.
         --project=<gcp-project> \
         --bigqueryDataset=my_dataset --bigqueryTableName=<my_table_name> \
         --tempLocation=gs://temp_bucket --outputFilePath=hdfs://host:port/user/test/ \
-        --sqlFilePath=<path-to-sql> --runner=DataflowRunner
+        --sqlFilePath=<path-to-sql> --runner=SparkRunner
     ```
