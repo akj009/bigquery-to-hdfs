@@ -23,7 +23,7 @@
         <lombok.version>1.18.4</lombok.version>
         <ini4j.version>0.5.4</ini4j.version>
         <junit.version>4.12</junit.version>
-        <log4j.version>2.7</log4j.version>
+        <log4j.version>2.13.3</log4j.version>
     </properties>
 
     <build>
